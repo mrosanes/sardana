@@ -560,7 +560,10 @@ class BaseDoor(MacroServerDevice):
         pass
 
     def runMacro(self, obj, parameters=[], synch=False):
-        obj = obj.decode('utf-8')
+        try:
+            obj = obj.decode('utf-8')
+        except AttributeError:
+            pass
         self._user_xml = self.preRunMacro(obj, parameters)
         result = self._runMacro(self._user_xml, synch=synch)
         return self.postRunMacro(result, synch)
